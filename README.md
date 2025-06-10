@@ -3,5 +3,8 @@ Small 3D rpg prototype made in a self-imposed game jam using Godot (4.4) with GD
 
 [![🎮 Build & Export Game](https://github.com/comfyjase/air-biscuit/actions/workflows/builds.yml/badge.svg)](https://github.com/comfyjase/air-biscuit/actions/workflows/builds.yml)
 
-## Builds
+## 🎮 Builds
 You can find builds of the exported game for specific platforms/configurations under the [Actions](https://github.com/comfyjase/air-biscuit/actions) tab. These are generated per commit.
+
+## 📃 License
+This repository is licensed under the [MIT License](./LICENSE.md).

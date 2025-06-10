@@ -9,11 +9,15 @@
 #include <imgui-godot.h>
 #endif
 
-#include "custom_sprite.h"
-#include "build_information.h"
 #if TESTS_ENABLED
 #include "tests/game_test_node.h"
 #endif
+
+#include "build_information.h"
+#include "camera.h"
+#include "character_body.h"
+#include "player.h"
+#include "player_input.h"
 
 using namespace godot;
 
@@ -26,13 +30,16 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	ImGui::Godot::SyncImGuiPtrs();
 #endif
 
-	// Use GDREGISTER_CLASS if you want logic to run in editor as well...
-	GDREGISTER_RUNTIME_CLASS(BuildInformation);
-	GDREGISTER_CLASS(CustomSprite);
-	
 #if TESTS_ENABLED
 	GDREGISTER_RUNTIME_CLASS(GameTest);
 #endif
+
+	// Use GDREGISTER_CLASS if you want logic to run in editor as well...
+	GDREGISTER_RUNTIME_CLASS(BuildInformation);
+	GDREGISTER_CLASS(Camera);
+	GDREGISTER_CLASS(CharacterBody);
+	GDREGISTER_CLASS(PlayerInput)
+	GDREGISTER_CLASS(Player);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {

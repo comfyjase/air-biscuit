@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dillfyfxk3g77"]
+
+[node name="ClassRoomBase" type="Node3D"]
+
+[node name="Walls" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
+
+[node name="FrontWall" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.45)
+size = Vector3(8, 4, 0.5)
+
+[node name="BackWall" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+size = Vector3(8, 4, 0.5)
+
+[node name="RightWall" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.25, 0, 0.218878)
+size = Vector3(12, 4, 0.5)
+
+[node name="Doorway" type="CSGBox3D" parent="Walls/RightWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, -1, 0)
+operation = 2
+size = Vector3(1.25, 2, 1)
+
+[node name="LeftWall" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.25, 0, 0.219)
+size = Vector3(12, 4, 0.5)
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25, 0)
+size = Vector3(8, 0.5, 12)

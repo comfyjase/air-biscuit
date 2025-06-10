@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://dd8g5qsws681w"]
+
+[ext_resource type="PackedScene" uid="uid://dnn36ajif3ri7" path="res://models/characters/player/shibby.glb" id="1_rp718"]
+
+[node name="Player" type="Player"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.3, 1.6, -1.68)
+current = true
+
+[node name="Shibby" parent="." instance=ExtResource("1_rp718")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BuildInformation" type="BuildInformation" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
