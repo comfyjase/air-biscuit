@@ -65,6 +65,11 @@ void Player::animate(int p_animation, double p_delta) {
 	current_animation_state = (ANIMATIONS)p_animation;
 
 	switch (current_animation_state) {
+		case ANIMATIONS::ATTACK: {
+			animation_player->play("Attack");
+			animation_player->queue("Idle");
+			break;
+		}
 		case ANIMATIONS::IDLE: {
 			animation_player->play("Idle");
 			break;
@@ -123,6 +128,10 @@ void Player::draw_debug() {
 	ImGui::Text("State");
 	String current_animation_state_as_string = "Unknown";
 	switch (current_animation_state) {
+		case ANIMATIONS::ATTACK: {
+			current_animation_state_as_string = "Attack";
+			break;
+		}
 		case ANIMATIONS::IDLE: {
 			current_animation_state_as_string = "Idle";
 			break;

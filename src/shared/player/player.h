@@ -17,6 +17,7 @@ protected:
 
 public:
 	enum ANIMATIONS {
+		ATTACK,
 		IDLE,
 		WALK
 	};
