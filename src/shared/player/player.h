@@ -32,6 +32,7 @@ public:
 private:
 	PlayerCamera *camera;
 	PlayerInput *input;
+	ANIMATIONS current_animation_state;
 
 	void process_input(double p_delta);
 	void draw_debug();
