@@ -39,7 +39,7 @@ BuildInformation::BuildInformation() :
 		cpu_frame_time_label(nullptr),
 		gpu_frame_time_label(nullptr),
 		joypad_button_just_pressed(false),
-		show(true) {}
+		show(false) {}
 
 BuildInformation::~BuildInformation() {}
 
@@ -105,6 +105,12 @@ void BuildInformation::_input(const Ref<InputEvent> &p_event) {
 	// Keyboard input
 	if (input->is_action_just_pressed("imgui_toggle_debug")) {
 		show = !show;
+
+		if (show) {
+			input->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
+		} else {
+			input->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
+		}
 	}
 
 	// Joypad input
@@ -246,7 +252,7 @@ void BuildInformation::draw_node_hierarchy(Node *node) {
 
 	String node_name = node->get_name().c_unescape();
 	if (ImGui::TreeNodeEx(node_name.utf8().get_data(), flag)) {
-		if (ImGui::IsItemClicked() || ImGui::IsItemActivated() || node_name == "Player") {
+		if (ImGui::IsItemClicked() || ImGui::IsItemActivated()) {
 			selected_node = node;
 			any_hierarchy_item_selected = true;
 		}

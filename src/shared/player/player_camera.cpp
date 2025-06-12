@@ -51,7 +51,11 @@ void PlayerCamera::_ready() {
 }
 
 void PlayerCamera::_input(const Ref<InputEvent> &p_event) {
-#if 1
+	// Means debug is active.
+	if (input->get_mouse_mode() == Input::MOUSE_MODE_VISIBLE) {
+		return;
+	}
+
 	const Viewport *viewport = get_viewport();
 	const Window *window = viewport->get_window();
 
@@ -61,24 +65,21 @@ void PlayerCamera::_input(const Ref<InputEvent> &p_event) {
 
 	const Ref<InputEventMouseMotion> &mouse_motion_input_event = p_event;
 	if (mouse_motion_input_event.is_valid()) {
-		//const Vector2 &mouse_relative = Vector2(mouse_motion_input_event->get_relative().x, -mouse_motion_input_event->get_relative().y);
-		//rotate_camera(mouse_relative * camera_mouse_rotation_speed * scale_factor);
 		rotate_camera(mouse_motion_input_event->get_relative() * camera_mouse_rotation_speed * scale_factor);
 	}
-#endif
 }
 
 void PlayerCamera::_process(double p_delta) {
-#if 1
+	// Means debug is active.
+	if (input->get_mouse_mode() == Input::MOUSE_MODE_VISIBLE) {
+		return;
+	}
+
 	const Vector2 &camera_motion = input->get_vector("view_left", "view_right", "view_up", "view_down");
 	if (!camera_motion.is_zero_approx()) {
-		/*const Vector2 &camera_motion = Vector2(
-				input->get_action_strength("view_right") - input->get_action_strength("view_left"),
-				input->get_action_strength("view_up") - input->get_action_strength("view_down"));*/
 		const float camera_speed = p_delta * camera_controller_rotation_speed;
 		rotate_camera(camera_motion * camera_speed);
 	}
-#endif
 }
 
 void PlayerCamera::set_camera_controller_rotation_speed(const float p_controller_rotation_speed) {
