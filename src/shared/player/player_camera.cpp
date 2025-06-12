@@ -17,7 +17,7 @@ void PlayerCamera::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("get_camera_mouse_rotation_speed"), &PlayerCamera::get_camera_mouse_rotation_speed);
 	ClassDB::bind_method(D_METHOD("set_camera_mouse_rotation_speed", "p_mouse_rotation_speed"), &PlayerCamera::set_camera_mouse_rotation_speed);
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "camera_mouse_rotation_speed", PROPERTY_HINT_RANGE, "0,20,0.01"), "set_camera_mouse_rotation_speed", "get_camera_mouse_rotation_speed");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "camera_mouse_rotation_speed", PROPERTY_HINT_RANGE, "0,20,0.001"), "set_camera_mouse_rotation_speed", "get_camera_mouse_rotation_speed");
 }
 
 PlayerCamera::PlayerCamera() :
@@ -25,8 +25,8 @@ PlayerCamera::PlayerCamera() :
 		input(nullptr),
 		camera_controller_rotation_speed(3.0f),
 		camera_mouse_rotation_speed(0.001f),
-		camera_x_rotation_min(Math::deg_to_rad(-30.0f)),
-		camera_x_rotation_max(Math::deg_to_rad(30.0f)) {}
+		camera_x_rotation_min(Math::deg_to_rad(-89.9f)),
+		camera_x_rotation_max(Math::deg_to_rad(70.0f)) {}
 
 PlayerCamera::~PlayerCamera() {}
 
@@ -40,6 +40,14 @@ void PlayerCamera::_ready() {
 
 	input = Input::get_singleton();
 	ERR_FAIL_NULL_MSG(input, "Input hasn't been initialized yet?");
+
+	input->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
+
+	camera_base = get_node<Node3D>("../../..");
+	ERR_FAIL_NULL_MSG(camera_base, "Failed to find CameraBase node parent");
+
+	camera_rot = get_node<Node3D>("../..");
+	ERR_FAIL_NULL_MSG(camera_rot, "Failed to find CameraRot node parent");
 }
 
 void PlayerCamera::_input(const Ref<InputEvent> &p_event) {
@@ -53,19 +61,23 @@ void PlayerCamera::_input(const Ref<InputEvent> &p_event) {
 
 	const Ref<InputEventMouseMotion> &mouse_motion_input_event = p_event;
 	if (mouse_motion_input_event.is_valid()) {
-		const Vector2 &mouse_relative = Vector2(mouse_motion_input_event->get_relative().x, -mouse_motion_input_event->get_relative().y);
-		rotate_camera(mouse_relative * camera_mouse_rotation_speed * scale_factor);
+		//const Vector2 &mouse_relative = Vector2(mouse_motion_input_event->get_relative().x, -mouse_motion_input_event->get_relative().y);
+		//rotate_camera(mouse_relative * camera_mouse_rotation_speed * scale_factor);
+		rotate_camera(mouse_motion_input_event->get_relative() * camera_mouse_rotation_speed * scale_factor);
 	}
 #endif
 }
 
 void PlayerCamera::_process(double p_delta) {
 #if 1
-	const Vector2 &camera_motion = Vector2(
-			input->get_action_strength("view_right") - input->get_action_strength("view_left"),
-			input->get_action_strength("view_up") - input->get_action_strength("view_down"));
-	const float camera_speed = p_delta * camera_controller_rotation_speed;
-	rotate_camera(camera_motion * camera_speed);
+	const Vector2 &camera_motion = input->get_vector("view_left", "view_right", "view_up", "view_down");
+	if (!camera_motion.is_zero_approx()) {
+		/*const Vector2 &camera_motion = Vector2(
+				input->get_action_strength("view_right") - input->get_action_strength("view_left"),
+				input->get_action_strength("view_up") - input->get_action_strength("view_down"));*/
+		const float camera_speed = p_delta * camera_controller_rotation_speed;
+		rotate_camera(camera_motion * camera_speed);
+	}
 #endif
 }
 
@@ -85,9 +97,25 @@ float PlayerCamera::get_camera_mouse_rotation_speed() const {
 	return camera_mouse_rotation_speed;
 }
 
+Node3D *PlayerCamera::get_camera_base() const {
+	return camera_base;
+}
+
+Node3D *PlayerCamera::get_camera_rot() const {
+	return camera_rot;
+}
+
+const Quaternion PlayerCamera::get_camera_quaternion() const {
+	return camera_base->get_global_transform().get_basis().get_rotation_quaternion();
+}
+
+const Basis &PlayerCamera::get_camera_basis() const {
+	return camera_rot->get_global_transform().get_basis();
+}
+
 void PlayerCamera::rotate_camera(const Vector2 &p_rotate) {
-	rotate_y(-p_rotate.x);
-	orthonormalize();
-	const Vector3 &new_rotation = Vector3(Math::clamp(get_rotation().x + p_rotate.y, camera_x_rotation_min, camera_x_rotation_max), get_rotation().y, get_rotation().z);
-	set_rotation(new_rotation);
+	camera_base->rotate_y(-p_rotate.x);
+	camera_base->orthonormalize();
+	const Vector3 &new_rotation = Vector3(Math::clamp(camera_rot->get_rotation().x + p_rotate.y, camera_x_rotation_min, camera_x_rotation_max), camera_rot->get_rotation().y, camera_rot->get_rotation().z);
+	camera_rot->set_rotation(new_rotation);
 }

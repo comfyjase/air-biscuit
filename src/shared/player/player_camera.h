@@ -30,7 +30,15 @@ public:
 	void set_camera_mouse_rotation_speed(const float p_mouse_rotation_speed);
 	float get_camera_mouse_rotation_speed() const;
 
+	Node3D *get_camera_base() const;
+	Node3D *get_camera_rot() const;
+
+	const Quaternion get_camera_quaternion() const override;
+	const Basis &get_camera_basis() const override;
+
 private:
+	Node3D *camera_base;
+	Node3D *camera_rot;
 	Input *input;
 	float camera_controller_rotation_speed;
 	float camera_mouse_rotation_speed;

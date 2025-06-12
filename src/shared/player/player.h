@@ -16,11 +16,18 @@ protected:
 	static void _bind_methods();
 
 public:
+	enum ANIMATIONS {
+		IDLE,
+		WALK
+	};
+
 	Player();
 	~Player();
 
 	void _ready() override;
 	void _physics_process(double p_delta) override;
+
+	void animate(int p_animation, double p_delta);
 
 private:
 	PlayerCamera *camera;

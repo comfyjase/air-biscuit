@@ -6,10 +6,6 @@
 
 [node name="Player" type="Player"]
 
-[node name="Camera" type="PlayerCamera" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.3, 1.6, -1.68)
-current = true
-
 [node name="Input" type="PlayerInput" parent="."]
 
 [node name="Shibby" parent="." instance=ExtResource("1_rp718")]
@@ -35,3 +31,20 @@ anchor_right = 1.0
 offset_left = -40.0
 offset_bottom = 40.0
 grow_horizontal = 0
+
+[node name="CameraBase" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CameraRot" type="Node3D" parent="CameraBase"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraBase/CameraRot"]
+transform = Transform3D(-1, 2.99003e-08, -8.21505e-08, 0, 0.939693, 0.34202, 8.74228e-08, 0.34202, -0.939693, 0, 0, 0)
+spring_length = 2.4
+
+[node name="Camera" type="PlayerCamera" parent="CameraBase/CameraRot/SpringArm3D"]
+current = true
+far = 300.0
+
+[node name="RootMotionView" type="RootMotionView" parent="."]
+
+[editable path="Shibby"]

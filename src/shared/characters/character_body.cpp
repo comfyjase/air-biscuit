@@ -1,6 +1,7 @@
 #include "character_body.h"
 
 #include <godot_cpp/classes/animation_player.hpp>
+#include <godot_cpp/classes/animation_tree.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/project_settings.hpp>
 #include <godot_cpp/core/class_db.hpp>
@@ -27,6 +28,8 @@ void CharacterBody::_bind_methods() {
 CharacterBody::CharacterBody() :
 		CharacterBody3D(),
 		animation_player(nullptr),
+		animation_tree(nullptr),
+		model(nullptr),
 		orientation(),
 		root_motion(),
 		gravity((float)ProjectSettings::get_singleton()->get_setting("physics/3d/default_gravity") * (Vector3)ProjectSettings::get_singleton()->get_setting("physics/3d/default_gravity_vector")),
@@ -51,7 +54,7 @@ void CharacterBody::_ready() {
 }
 
 void CharacterBody::initialize() {
-	orientation = get_global_transform();
+	orientation = model->get_global_transform();
 	orientation.origin = Vector3();
 }
 

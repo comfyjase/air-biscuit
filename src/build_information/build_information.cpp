@@ -244,8 +244,9 @@ void BuildInformation::draw_node_hierarchy(Node *node) {
 		any_hierarchy_item_selected = true;
 	}
 
-	if (ImGui::TreeNodeEx(node->get_name().c_unescape().utf8().get_data(), flag)) {
-		if (ImGui::IsItemClicked() || ImGui::IsItemActivated()) {
+	String node_name = node->get_name().c_unescape();
+	if (ImGui::TreeNodeEx(node_name.utf8().get_data(), flag)) {
+		if (ImGui::IsItemClicked() || ImGui::IsItemActivated() || node_name == "Player") {
 			selected_node = node;
 			any_hierarchy_item_selected = true;
 		}

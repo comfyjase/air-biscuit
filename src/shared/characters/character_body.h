@@ -8,6 +8,7 @@
 namespace godot {
 
 class AnimationPlayer;
+class AnimationTree;
 
 class CharacterBody : public CharacterBody3D {
 	GDCLASS(CharacterBody, CharacterBody3D)
@@ -33,6 +34,8 @@ public:
 
 protected:
 	AnimationPlayer *animation_player;
+	AnimationTree *animation_tree;
+	Node3D *model;
 	Transform3D orientation;
 	Transform3D root_motion;
 	Vector3 gravity;

@@ -16,8 +16,8 @@ public:
 	Camera();
 	~Camera();
 
-	const Quaternion &get_camera_quaternion() const;
-	const Basis &get_camera_basis() const;
+	virtual const Quaternion get_camera_quaternion() const;
+	virtual const Basis &get_camera_basis() const;
 };
 
 } //namespace godot
