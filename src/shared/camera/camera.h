@@ -1,6 +1,8 @@
 #pragma once
 
 #include <godot_cpp/classes/camera3d.hpp>
+#include <godot_cpp/variant/basis.hpp>
+#include <godot_cpp/variant/quaternion.hpp>
 
 namespace godot {
 
@@ -13,6 +15,9 @@ protected:
 public:
 	Camera();
 	~Camera();
+
+	const Quaternion &get_camera_quaternion() const;
+	const Basis &get_camera_basis() const;
 };
 
 } //namespace godot

@@ -6,7 +6,8 @@
 
 namespace godot {
 
-	class PlayerInput;
+class PlayerCamera;
+class PlayerInput;
 
 class Player : public CharacterBody {
 	GDCLASS(Player, CharacterBody)
@@ -22,10 +23,10 @@ public:
 	void _physics_process(double p_delta) override;
 
 private:
+	PlayerCamera *camera;
 	PlayerInput *input;
-	Vector2 motion;
 
-	void apply_input(double p_delta);
+	void process_input(double p_delta);
 	void draw_debug();
 };
 

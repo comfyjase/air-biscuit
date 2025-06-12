@@ -7,7 +7,7 @@
 
 namespace godot {
 
-	class Input;
+class Input;
 
 class PlayerInput : public Node {
 	GDCLASS(PlayerInput, Node)

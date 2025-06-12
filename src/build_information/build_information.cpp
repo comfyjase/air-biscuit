@@ -39,7 +39,7 @@ BuildInformation::BuildInformation() :
 		cpu_frame_time_label(nullptr),
 		gpu_frame_time_label(nullptr),
 		joypad_button_just_pressed(false),
-		show(false) {}
+		show(true) {}
 
 BuildInformation::~BuildInformation() {}
 
