@@ -19,6 +19,9 @@
 #include "player.h"
 #include "player_camera.h"
 #include "player_input.h"
+#include "state_machine.h"
+#include "state_locomotion.h"
+#include "state_player_locomotion.h"
 
 using namespace godot;
 
@@ -43,6 +46,11 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(PlayerCamera);
 	GDREGISTER_CLASS(PlayerInput);
 	GDREGISTER_CLASS(Player);
+
+	GDREGISTER_CLASS(State);
+	GDREGISTER_CLASS(StateMachine);
+	GDREGISTER_CLASS(StateLocomotion);
+	GDREGISTER_CLASS(StatePlayerLocomotion);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {

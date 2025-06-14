@@ -8,6 +8,7 @@ namespace godot {
 
 class PlayerCamera;
 class PlayerInput;
+class StateMachine;
 
 class Player : public CharacterBody {
 	GDCLASS(Player, CharacterBody)
@@ -33,6 +34,7 @@ public:
 private:
 	PlayerCamera *camera;
 	PlayerInput *input;
+	StateMachine *state_machine;
 	ANIMATIONS current_animation_state;
 
 	void process_input(double p_delta);

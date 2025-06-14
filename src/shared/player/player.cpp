@@ -12,6 +12,7 @@
 
 #include "player_camera.h"
 #include "player_input.h"
+#include "state_machine.h"
 
 using namespace godot;
 
@@ -25,6 +26,7 @@ Player::Player() :
 		CharacterBody(),
 		camera(nullptr),
 		input(nullptr),
+		state_machine(nullptr),
 		current_animation_state(ANIMATIONS::IDLE) {
 }
 
@@ -50,6 +52,9 @@ void Player::_ready() {
 
 	model = get_node<Node3D>("Shibby");
 	ERR_FAIL_NULL_MSG(animation_player, "Failed to get player model");
+
+	state_machine = get_node<StateMachine>("StateMachine");
+	ERR_FAIL_NULL_MSG(animation_player, "Failed to get player state machine");
 
 	initialize();
 
