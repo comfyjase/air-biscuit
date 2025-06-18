@@ -1,6 +1,7 @@
 #include "register_types.h"
 
 #include <gdextension_interface.h>
+#include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
@@ -19,8 +20,8 @@
 #include "player.h"
 #include "player_camera.h"
 #include "player_input.h"
-#include "state_machine.h"
 #include "state_locomotion.h"
+#include "state_machine.h"
 
 #include "function_library.h"
 
