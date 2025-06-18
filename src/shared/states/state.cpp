@@ -1,12 +1,33 @@
 #include "state.h"
 
+#include <godot_cpp/classes/node.hpp>
+
+#include "state_machine.h"
+
 using namespace godot;
 
 void State::_bind_methods() {}
 
-State::State() {}
+State::State() :
+		Resource(),
+		owner(nullptr),
+		root_node(nullptr) {
+	set_local_to_scene(true);
+}
 
 State::~State() {}
+
+void State::initialize_state(StateMachine *p_owner, Node *p_root_node) {
+	ERR_FAIL_NULL_MSG(p_owner, "p_owner is null");
+	owner = p_owner;
+
+	ERR_FAIL_NULL_MSG(p_root_node, "p_root_node is null");
+	root_node = p_root_node;
+
+	initialize();
+}
+
+void State::initialize() {}
 
 void State::on_enter() {}
 

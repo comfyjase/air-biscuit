@@ -27,6 +27,7 @@ public:
 
 	void set_initial_state(const Ref<State>& p_state);
 	Ref<State> get_initial_state() const;
+	Ref<State> get_current_state() const;
 
 protected:
 	void _validate_property(PropertyInfo &p_property) const;
@@ -34,6 +35,8 @@ protected:
 private:
 	Ref<State> initial_state;
 	Ref<State> current_state;
+
+	Node *root_node;
 
 	void draw_debug();
 };

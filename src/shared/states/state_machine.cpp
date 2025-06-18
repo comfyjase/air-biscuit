@@ -1,6 +1,7 @@
 #include "state_machine.h"
 
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
@@ -23,7 +24,8 @@ void StateMachine::_bind_methods() {
 StateMachine::StateMachine() :
 		Node(),
 		initial_state(nullptr),
-		current_state(nullptr) {
+		current_state(nullptr),
+		root_node(nullptr) {
 }
 
 StateMachine::~StateMachine() {
@@ -37,16 +39,22 @@ void StateMachine::_ready() {
 		return;
 	}
 
+	SceneTree *scene_tree = get_tree();
+	ERR_FAIL_NULL_MSG(scene_tree, "Failed to get scene tree somehow");
+	root_node = scene_tree->get_current_scene();
+	ERR_FAIL_NULL_MSG(root_node, "Failed to find root node somehow");
+
 	ERR_FAIL_NULL_MSG(initial_state, "initial_state is nullptr, please make sure this is set to something in the editor.");
 	current_state = initial_state;
+	current_state->initialize_state(this, root_node);
 	current_state->on_enter();
 }
 
-void godot::StateMachine::_input(const Ref<InputEvent> &p_event) {
+void StateMachine::_input(const Ref<InputEvent> &p_event) {
 	current_state->input(p_event);
 }
 
-void godot::StateMachine::_process(double p_delta) {
+void StateMachine::_process(double p_delta) {
 	current_state->process(p_delta);
 
 	// Handle any state transitions.
@@ -58,7 +66,7 @@ void godot::StateMachine::_process(double p_delta) {
 	}
 }
 
-void godot::StateMachine::_physics_process(double p_delta) {
+void StateMachine::_physics_process(double p_delta) {
 	current_state->physics_process(p_delta);
 }
 
@@ -70,9 +78,11 @@ Ref<State> StateMachine::get_initial_state() const {
 	return initial_state;
 }
 
+Ref<State> StateMachine::get_current_state() const {
+	return current_state;
+}
+
 void StateMachine::_validate_property(PropertyInfo &p_property) const {
-	if (p_property.name.c_unescape() == "initial_state") {
-	}
 }
 
 void StateMachine::draw_debug() {
