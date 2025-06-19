@@ -2,12 +2,13 @@
 
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/input_event_mouse_button.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
 #include "function_library.h"
 #include "player.h"
-#include "state_machine.h"
 #include "state_attack.h"
+#include "state_machine.h"
 
 using namespace godot;
 
@@ -42,6 +43,11 @@ void PlayerInput::_ready() {
 }
 
 void PlayerInput::_input(const Ref<InputEvent> &p_event) {
+	const Ref<InputEventMouseButton> &mouse_input_event = p_event;
+	if (mouse_input_event.is_valid()) {
+		input->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
+	}
+
 	if (input->is_action_just_pressed("attack")) {
 		state_machine->transition("Attack");
 	}
