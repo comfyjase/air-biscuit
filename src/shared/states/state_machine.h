@@ -2,13 +2,18 @@
 
 #include <godot_cpp/classes/input_event.hpp>
 #include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/object.hpp>
 #include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/core/property_info.hpp>
-#include <godot_cpp/variant/array.hpp>
+#include <godot_cpp/core/type_info.hpp>
+#include <godot_cpp/variant/typed_array.hpp>
 
 #include "state.h"
 
 namespace godot {
+
+MAKE_TYPED_ARRAY_INFO(Ref<State>, Variant::OBJECT);
+MAKE_TYPED_ARRAY(Ref<State>, Variant::OBJECT);
 
 class StateMachine : public Node {
 	GDCLASS(StateMachine, Node);
@@ -25,18 +30,23 @@ public:
 	void _process(double p_delta) override;
 	void _physics_process(double p_delta) override;
 
-	void set_initial_state(const Ref<State>& p_state);
-	Ref<State> get_initial_state() const;
+	void transition(String new_state_name);
+
+	void set_states(const TypedArray<Ref<State>> p_states);
+	TypedArray<Ref<State>> get_states() const;
+
 	Ref<State> get_current_state() const;
 
 protected:
 	void _validate_property(PropertyInfo &p_property) const;
 
 private:
-	Ref<State> initial_state;
+	TypedArray<Ref<State>> states;
 	Ref<State> current_state;
 
 	Node *root_node;
+
+	Ref<State> get_state(const String &p_name) const;
 
 	void draw_debug();
 };

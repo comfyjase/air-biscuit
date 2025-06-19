@@ -54,8 +54,6 @@ void Player::_ready() {
 		Node3D *model = get_node<Node3D>("Shibby");
 		locomotion->set_node_to_update_look_at(model);
 		locomotion->set_speed(speed);
-	} else {
-		ERR_FAIL_COND_MSG(true, "Player::_ready() - state_machine->get_current_state() isn't setup yet. :(");
 	}
 }
 
@@ -64,8 +62,6 @@ void Player::_physics_process(double p_delta) {
 	if (locomotion.is_valid()) {
 		locomotion->set_input_velocity(input->get_motion());
 		locomotion->set_rotation(camera->get_camera_basis().get_euler().y);
-	} else {
-		ERR_FAIL_COND_MSG(true, "Player::process_input() - state_machine->get_current_state() isn't setup yet. :(");
 	}
 }
 

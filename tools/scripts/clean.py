@@ -108,6 +108,10 @@ if clean_engine:
         if building_editor_for_non_native_os:
             clean_command += " generate_apk=yes"
     
+    if not is_ci:
+        cache_path = project_directory.replace("\\", "/") + "/godot/.scons_cache"
+        clean_command += f" cache_path={cache_path}"
+    
     clean_command += " -c"
     print("Clean Command: " + clean_command, flush=True)
     return_code = subprocess.call(clean_command, shell=True)

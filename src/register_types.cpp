@@ -17,9 +17,14 @@
 #include "build_information.h"
 #include "camera.h"
 #include "character_body.h"
+
+// Player
 #include "player.h"
 #include "player_camera.h"
 #include "player_input.h"
+
+// States
+#include "state_attack.h"
 #include "state_locomotion.h"
 #include "state_machine.h"
 
@@ -61,6 +66,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(StateAnimated);
 	GDREGISTER_CLASS(StateMachine);
 	GDREGISTER_CLASS(StateLocomotion);
+	GDREGISTER_CLASS(StateAttack);
 
 	// Project specific classes.
 	// Will go here...

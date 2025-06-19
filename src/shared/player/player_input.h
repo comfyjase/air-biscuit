@@ -8,6 +8,8 @@
 namespace godot {
 
 class Input;
+class Player;
+class StateMachine;
 
 class PlayerInput : public Node {
 	GDCLASS(PlayerInput, Node)
@@ -26,6 +28,8 @@ public:
 	const Vector2 &get_motion() const;
 
 private:
+	Player *player;
+	StateMachine *state_machine;
 	Input *input;
 	Vector2 motion;
 };

@@ -20,12 +20,16 @@ public:
 	void initialize() override;
 
 	void animate(String p_name, double p_delta);
+	void animate_and_queue_idle(String p_name, double p_delta);
 
 	void set_animation_player(AnimationPlayer* p_animation_player);
 	AnimationPlayer* get_animation_player() const;
 
-private:
+	bool has_animation_finished() const;
+
+protected:
 	AnimationPlayer* animation_player;
+	String current_animation_name;
 };
 
 } //namespace godot

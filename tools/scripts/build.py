@@ -105,6 +105,10 @@ elif platform_arg == "web":
 elif platform_arg == "android":
     if building_editor_for_non_native_os:
         build_command += " generate_apk=yes"
+
+if not is_ci:
+    cache_path = project_directory.replace("\\", "/") + "/godot/.scons_cache"
+    build_command += f" cache_path={cache_path}"
     
 print("Build Command: " + build_command, flush=True)
 return_code = subprocess.call(build_command, shell=True)
