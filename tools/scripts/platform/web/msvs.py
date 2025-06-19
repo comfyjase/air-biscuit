@@ -46,6 +46,9 @@ def get_vs_debug_settings():
             'LocalDebuggerCommand': binary_file_name,
             'LocalDebuggerCommandArguments': web_command_arguments_to_run_project_as_game
         },
+        # web development
+        {
+        },
         # web template_debug
         {
         },
@@ -75,6 +78,14 @@ def get_vs_cpp_defines():
             "DEBUG"
         ],
         # web editor_game
+        [
+            "PLATFORM_WEB",
+            "TOOLS_ENABLED",
+            "DEBUG_ENABLED",
+            "TESTS_ENABLED",
+            "DEBUG"
+        ],
+        # web development
         [
             "PLATFORM_WEB",
             "TOOLS_ENABLED",
@@ -118,6 +129,10 @@ def get_vs_cpp_flags():
             "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
         ],
         # web editor_game
+        [
+            "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
+        ],
+        # web development
         [
             "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
         ],

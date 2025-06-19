@@ -41,6 +41,9 @@ def get_vs_debug_settings():
             'LocalDebuggerCommand': "wsl.exe",
             'LocalDebuggerCommandArguments': wsl_command_arguments_to_run_project_as_game
         },
+        # linux development
+        {
+        },
         # linux template_debug
         {
         },
@@ -72,6 +75,16 @@ def get_vs_cpp_defines():
             "DEBUG"
         ],
         # linux editor_game
+        [
+            "PLATFORM_LINUX",
+            'IMGUI_USER_CONFIG="\\"imconfig-godot.h\\""',
+            "IMGUI_ENABLED",
+            "TOOLS_ENABLED",
+            "DEBUG_ENABLED",
+            "TESTS_ENABLED",
+            "DEBUG"
+        ],
+        # linux development
         [
             "PLATFORM_LINUX",
             'IMGUI_USER_CONFIG="\\"imconfig-godot.h\\""',
@@ -124,6 +137,10 @@ def get_vs_cpp_flags():
             "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
         ],
         # linux editor_game
+        [
+            "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
+        ],
+        # linux development
         [
             "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
         ],

@@ -15,11 +15,12 @@ platforms = ["linux", "macos", "windows", "android", "ios", "web"]
 
 # editor - run godot editor dev executable and pass --editor and --path
 # editor_game - run godot editor dev executable and just pass --path
+# development - only builds the game project, this is intended to be used when running the godot binary separately and working on the GDExtension code exclusively. So you can hot reload your changes whilst the editor is running.
 # template_debug - run the exported template_debug executable and then attach the visual studio instance to it.
 # template_release - run the exported template_release executable and then attach the visual studio instance to it.
 # profile - run the exported template_release executable (should be exported using production=yes and debugging_symbols=yes) and then attach the visual studio instance to it.
 # production - run the exported template_release executable (should be exported using production=yes) and then attach the visual studio instance to it.
-configurations = ["editor", "editor_game", "template_debug", "template_release", "profile", "production"]
+configurations = ["editor", "editor_game", "development", "template_debug", "template_release", "profile", "production"]
 
 # CPU architecture options.
 architectures = [

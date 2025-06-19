@@ -46,6 +46,9 @@ def get_vs_debug_settings():
             'LocalDebuggerCommand': binary_file_name,
             'LocalDebuggerCommandArguments': android_editor_game_command_arguments_to_install_and_run
         },
+        # android development
+        {
+        },
         # android template_debug
         {
         },
@@ -75,6 +78,14 @@ def get_vs_cpp_defines():
             "DEBUG"
         ],
         # android editor_game
+        [
+            "PLATFORM_ANDROID",
+            "TOOLS_ENABLED",
+            "DEBUG_ENABLED",
+            "TESTS_ENABLED",
+            "DEBUG"
+        ],
+        # android development
         [
             "PLATFORM_ANDROID",
             "TOOLS_ENABLED",
@@ -118,6 +129,10 @@ def get_vs_cpp_flags():
             "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
         ],
         # android editor_game
+        [
+            "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
+        ],
+        # android development
         [
             "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
         ],

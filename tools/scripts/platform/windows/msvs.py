@@ -55,6 +55,12 @@ def get_vs_debug_settings():
             'LocalDebuggerCommand': f"$(SolutionDir)godot/bin/{binary_file_names[1]}",
             'LocalDebuggerCommandArguments': command_arguments_to_run_project_as_game
         },
+        # Win32 development
+        {
+        },
+        # x64 development
+        {
+        },
         # Win32 template_debug
         {
         },
@@ -114,6 +120,24 @@ def get_vs_cpp_defines():
             "DEBUG"
         ],
         # x64 editor_game
+        [
+            "PLATFORM_WINDOWS",
+            'IMGUI_USER_CONFIG="\\"imconfig-godot.h\\""',
+            "IMGUI_ENABLED",
+            "TOOLS_ENABLED",
+            "DEBUG_ENABLED",
+            "TESTS_ENABLED",
+            "DEBUG"
+        ],
+        # Win32 development
+        [
+            "PLATFORM_WINDOWS",
+            "TOOLS_ENABLED",
+            "DEBUG_ENABLED",
+            "TESTS_ENABLED",
+            "DEBUG"
+        ],
+        # x64 development
         [
             "PLATFORM_WINDOWS",
             'IMGUI_USER_CONFIG="\\"imconfig-godot.h\\""',
@@ -198,6 +222,14 @@ def get_vs_cpp_flags():
             "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
         ],
         # x64 editor_game
+        [
+            "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
+        ],
+        # Win32 development
+        [
+            "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
+        ],
+        # x64 development
         [
             "/nologo /utf-8 /MT /Zi /FS /O2 /TP /std:c++17 /Zc:__cplusplus"
         ],

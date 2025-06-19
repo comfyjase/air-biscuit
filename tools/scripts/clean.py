@@ -48,7 +48,7 @@ using_wsl = wsl_available and platform_arg == "linux"
 # Engine Clean
 
 # Switch to True if you want to clean engine symbols too...
-clean_engine = True
+clean_engine = configuration_arg != "development":
 
 if clean_engine:
     print("=====================================", flush=True)
