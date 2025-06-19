@@ -8,15 +8,22 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/math.hpp>
 
+#if IMGUI_ENABLED
+#include <imgui-godot.h>
+#endif
+
 using namespace godot;
 
 void PlayerCamera::_bind_methods() {
+#if IMGUI_ENABLED
+	ClassDB::bind_method(D_METHOD("draw_debug"), &PlayerCamera::draw_debug);
+#endif
 	ClassDB::bind_method(D_METHOD("get_camera_controller_rotation_speed"), &PlayerCamera::get_camera_controller_rotation_speed);
 	ClassDB::bind_method(D_METHOD("set_camera_controller_rotation_speed", "p_controller_rotation_speed"), &PlayerCamera::set_camera_controller_rotation_speed);
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "camera_controller_rotation_speed", PROPERTY_HINT_RANGE, "1,20,0.1"), "set_camera_controller_rotation_speed", "get_camera_controller_rotation_speed");
-
 	ClassDB::bind_method(D_METHOD("get_camera_mouse_rotation_speed"), &PlayerCamera::get_camera_mouse_rotation_speed);
 	ClassDB::bind_method(D_METHOD("set_camera_mouse_rotation_speed", "p_mouse_rotation_speed"), &PlayerCamera::set_camera_mouse_rotation_speed);
+
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "camera_controller_rotation_speed", PROPERTY_HINT_RANGE, "1,20,0.1"), "set_camera_controller_rotation_speed", "get_camera_controller_rotation_speed");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "camera_mouse_rotation_speed", PROPERTY_HINT_RANGE, "0,20,0.001"), "set_camera_mouse_rotation_speed", "get_camera_mouse_rotation_speed");
 }
 
@@ -119,4 +126,19 @@ void PlayerCamera::rotate_camera(const Vector2 &p_rotate) {
 	camera_base->orthonormalize();
 	const Vector3 &new_rotation = Vector3(Math::clamp(camera_rot->get_rotation().x + p_rotate.y, camera_x_rotation_min, camera_x_rotation_max), camera_rot->get_rotation().y, camera_rot->get_rotation().z);
 	camera_rot->set_rotation(new_rotation);
+	camera_rot->orthonormalize();
+}
+
+void PlayerCamera::draw_debug() {
+#if IMGUI_ENABLED
+	ImGui::Text("Rotation");
+
+	float x_rotation = get_global_rotation().x;
+	float y_rotation = get_global_rotation().y;
+	float z_rotation = get_global_rotation().z;
+
+	ImGui::DragFloat("Camera Global Rotation X:", &x_rotation);
+	ImGui::DragFloat("Camera Global Rotation Y:", &y_rotation);
+	ImGui::DragFloat("Camera Global Rotation Z:", &z_rotation);
+#endif
 }

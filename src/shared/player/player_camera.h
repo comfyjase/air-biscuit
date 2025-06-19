@@ -47,6 +47,8 @@ private:
 	float camera_x_rotation_max;
 
 	void rotate_camera(const Vector2 &p_rotate);
+
+	void draw_debug();
 };
 
 } //namespace godot

@@ -48,7 +48,7 @@ void PlayerInput::_input(const Ref<InputEvent> &p_event) {
 }
 
 void PlayerInput::_process(double delta) {
-	motion = input->get_vector("move_right", "move_left", "move_back", "move_forward");
+	motion = input->get_vector("move_left", "move_right", "move_forward", "move_back");
 
 	Ref<StateAttack> attack_state = state_machine->get_current_state();
 	if (attack_state.is_valid()) {

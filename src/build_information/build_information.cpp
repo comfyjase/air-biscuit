@@ -38,8 +38,10 @@ BuildInformation::BuildInformation() :
 		frame_time_label(nullptr),
 		cpu_frame_time_label(nullptr),
 		gpu_frame_time_label(nullptr),
-		joypad_button_just_pressed(false),
-		show(false) {}
+		joypad_show_imgui_debug_button_just_pressed(false),
+		joypad_focus_imgui_debug_button_just_pressed(false),
+		show(false),
+		focus(true) {}
 
 BuildInformation::~BuildInformation() {}
 
@@ -100,13 +102,26 @@ void BuildInformation::_ready() {
 
 void BuildInformation::_input(const Ref<InputEvent> &p_event) {
 #if IMGUI_ENABLED
-	bool imgui_toggle_debug_joypad_input = (input->is_joy_button_pressed(0, JoyButton::JOY_BUTTON_LEFT_STICK) && input->is_joy_button_pressed(0, JoyButton::JOY_BUTTON_RIGHT_STICK));
+	const bool imgui_toggle_debug_joypad_input = (input->is_joy_button_pressed(0, JoyButton::JOY_BUTTON_LEFT_STICK) && input->is_joy_button_pressed(0, JoyButton::JOY_BUTTON_RIGHT_STICK));
+	const bool imgui_toggle_focus_joypad_input = (input->is_joy_button_pressed(0, JoyButton::JOY_BUTTON_LEFT_STICK) && input->is_joy_button_pressed(0, JoyButton::JOY_BUTTON_DPAD_DOWN));
 
 	// Keyboard input
 	if (input->is_action_just_pressed("imgui_toggle_debug")) {
 		show = !show;
 
 		if (show) {
+			// Always focus when explicitly showing the debug menu.
+			focus = true;
+			input->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
+		} else {
+			input->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
+		}
+	}
+
+	if (input->is_action_just_pressed("imgui_toggle_focus")) {
+		focus = !focus;
+
+		if (focus) {
 			input->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
 		} else {
 			input->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
@@ -115,12 +130,21 @@ void BuildInformation::_input(const Ref<InputEvent> &p_event) {
 
 	// Joypad input
 	if (imgui_toggle_debug_joypad_input) {
-		if (!joypad_button_just_pressed) {
+		if (!joypad_show_imgui_debug_button_just_pressed) {
 			show = !show;
-			joypad_button_just_pressed = true;
+			joypad_show_imgui_debug_button_just_pressed = true;
 		}
 	} else {
-		joypad_button_just_pressed = false;
+		joypad_show_imgui_debug_button_just_pressed = false;
+	}
+
+	if (imgui_toggle_focus_joypad_input) {
+		if (!joypad_focus_imgui_debug_button_just_pressed) {
+			focus = !focus;
+			joypad_focus_imgui_debug_button_just_pressed = true;
+		}
+	} else {
+		joypad_focus_imgui_debug_button_just_pressed = false;
 	}
 #endif
 }
@@ -132,6 +156,16 @@ void BuildInformation::_process(double delta) {
 		}
 
 		return;
+	}
+
+	if (focus) {
+		ImVec4 focused_colour = ImGui::GetStyle().Colors[ImGuiCol_WindowBg];
+		focused_colour.w = 1.0f;
+		ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = focused_colour;
+	} else {
+		ImVec4 not_focused_colour = ImGui::GetStyle().Colors[ImGuiCol_WindowBg];
+		not_focused_colour.w = 0.5f;
+		ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = not_focused_colour;
 	}
 
 	// Build Information

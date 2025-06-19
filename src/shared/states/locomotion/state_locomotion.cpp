@@ -81,6 +81,10 @@ void StateLocomotion::draw_debug() {
 	ImGui::DragFloat("X: ##velocity_locomotion", &velocity_x);
 	ImGui::DragFloat("Y: ##velocity_locomotion", &velocity_y);
 	ImGui::DragFloat("Z: ##velocity_locomotion", &velocity_z);
+
+	ImGui::Text("Rotation");
+
+	ImGui::DragFloat("Y: ##rotation_locomotion", &rotation);
 #endif
 }
 

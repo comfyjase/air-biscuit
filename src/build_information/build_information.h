@@ -56,7 +56,9 @@ private:
 	RichTextLabel *cpu_frame_time_label;
 	RichTextLabel *gpu_frame_time_label;
 
-	bool joypad_button_just_pressed;
+	bool joypad_show_imgui_debug_button_just_pressed;
+	bool joypad_focus_imgui_debug_button_just_pressed;
 	bool show;
+	bool focus;
 };
 } //namespace godot

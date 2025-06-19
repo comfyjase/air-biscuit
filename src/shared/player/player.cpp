@@ -61,7 +61,7 @@ void Player::_physics_process(double p_delta) {
 	Ref<StateLocomotion> locomotion = state_machine->get_current_state();
 	if (locomotion.is_valid()) {
 		locomotion->set_input_velocity(input->get_motion());
-		locomotion->set_rotation(camera->get_camera_basis().get_euler().y);
+		locomotion->set_rotation(camera->get_global_rotation().y);
 	}
 }
 
