@@ -9,6 +9,7 @@
 namespace godot {
 
 class Input;
+class VirtualJoystick;
 
 class PlayerCamera : public Camera {
 	GDCLASS(PlayerCamera, Camera)
@@ -40,6 +41,7 @@ private:
 	Node3D *camera_base;
 	Node3D *camera_rot;
 	Input *input;
+	VirtualJoystick *virtual_right_joystick;
 	float camera_controller_rotation_speed;
 	float camera_mouse_rotation_speed;
 

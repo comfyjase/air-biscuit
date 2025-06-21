@@ -12,6 +12,8 @@
 #include <imgui-godot.h>
 #endif
 
+#include "virtual_joystick.h"
+
 using namespace godot;
 
 void PlayerCamera::_bind_methods() {
@@ -30,6 +32,7 @@ void PlayerCamera::_bind_methods() {
 PlayerCamera::PlayerCamera() :
 		Camera(),
 		input(nullptr),
+		virtual_right_joystick(nullptr),
 		camera_controller_rotation_speed(3.0f),
 		camera_mouse_rotation_speed(0.001f),
 		camera_x_rotation_min(Math::deg_to_rad(-89.9f)),
@@ -55,9 +58,16 @@ void PlayerCamera::_ready() {
 
 	camera_rot = get_node<Node3D>("../..");
 	ERR_FAIL_NULL_MSG(camera_rot, "Failed to find CameraRot node parent");
+
+	virtual_right_joystick = get_node<VirtualJoystick>("../../../../UI/VirtualRightJoystick");
+	ERR_FAIL_NULL_MSG(virtual_right_joystick, "virtual_right_joystick is nullptr");
 }
 
 void PlayerCamera::_input(const Ref<InputEvent> &p_event) {
+#if PLATFORM_ANDROID || PLATFORM_IOS
+	return;
+#endif
+
 	// Means debug is active.
 	if (input->get_mouse_mode() == Input::MOUSE_MODE_VISIBLE) {
 		return;
@@ -82,9 +92,18 @@ void PlayerCamera::_process(double p_delta) {
 		return;
 	}
 
+#if PLATFORM_ANDROID || PLATFORM_IOS
+	const Vector2 &camera_motion = virtual_right_joystick->get_motion();
+#else
 	const Vector2 &camera_motion = input->get_vector("view_left", "view_right", "view_up", "view_down");
+#endif
 	if (!camera_motion.is_zero_approx()) {
+#if PLATFORM_ANDROID || PLATFORM_IOS
+		const float camera_speed = p_delta * camera_controller_rotation_speed * 0.005f;
+#else
 		const float camera_speed = p_delta * camera_controller_rotation_speed;
+#endif
+
 		rotate_camera(camera_motion * camera_speed);
 	}
 }

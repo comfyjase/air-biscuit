@@ -10,6 +10,7 @@ namespace godot {
 class Input;
 class Player;
 class StateMachine;
+class VirtualJoystick;
 
 class PlayerInput : public Node {
 	GDCLASS(PlayerInput, Node)
@@ -30,6 +31,7 @@ public:
 private:
 	Player *player;
 	StateMachine *state_machine;
+	VirtualJoystick *virtual_left_joystick;
 	Input *input;
 	Vector2 motion;
 };

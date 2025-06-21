@@ -158,6 +158,11 @@ void BuildInformation::_process(double delta) {
 		return;
 	}
 
+	// Build Information
+	// Things such as build type, FPS and frame times
+	draw_build_information(delta);
+
+#if IMGUI_ENABLED
 	if (focus) {
 		ImVec4 focused_colour = ImGui::GetStyle().Colors[ImGuiCol_WindowBg];
 		focused_colour.w = 1.0f;
@@ -168,11 +173,6 @@ void BuildInformation::_process(double delta) {
 		ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = not_focused_colour;
 	}
 
-	// Build Information
-	// Things such as build type, FPS and frame times
-	draw_build_information(delta);
-
-#if IMGUI_ENABLED
 	// Game Specific Debug
 	SceneTree *scene_tree = get_tree();
 	ERR_FAIL_NULL_MSG(scene_tree, "Failed to get scene tree somehow");

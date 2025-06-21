@@ -9,6 +9,7 @@
 #include "player.h"
 #include "state_attack.h"
 #include "state_machine.h"
+#include "virtual_joystick.h"
 
 using namespace godot;
 
@@ -18,8 +19,8 @@ PlayerInput::PlayerInput() :
 		Node(),
 		player(nullptr),
 		input(nullptr),
-		motion() {
-}
+		virtual_left_joystick(nullptr),
+		motion() {}
 
 PlayerInput::~PlayerInput() {
 }
@@ -40,6 +41,9 @@ void PlayerInput::_ready() {
 
 	state_machine = FunctionLibrary::get_singleton()->find_node<StateMachine>(player);
 	ERR_FAIL_NULL_MSG(state_machine, "state_machine is nullptr, does the player scene have a StateMachine node attached?");
+
+	virtual_left_joystick = get_node<VirtualJoystick>("../UI/VirtualLeftJoystick");
+	ERR_FAIL_NULL_MSG(virtual_left_joystick, "virtual_left_joystick is nullptr");
 }
 
 void PlayerInput::_input(const Ref<InputEvent> &p_event) {
@@ -54,7 +58,11 @@ void PlayerInput::_input(const Ref<InputEvent> &p_event) {
 }
 
 void PlayerInput::_process(double delta) {
+#if PLATFORM_ANDROID || PLATFORM_IOS
+	motion = virtual_left_joystick->get_motion();
+#else
 	motion = input->get_vector("move_left", "move_right", "move_forward", "move_back");
+#endif
 
 	Ref<StateAttack> attack_state = state_machine->get_current_state();
 	if (attack_state.is_valid()) {

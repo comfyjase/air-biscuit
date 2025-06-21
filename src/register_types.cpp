@@ -17,6 +17,7 @@
 #include "build_information.h"
 #include "camera.h"
 #include "character_body.h"
+#include "virtual_joystick.h"
 
 // Player
 #include "player.h"
@@ -57,6 +58,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	// Shared classes.
 	GDREGISTER_CLASS(Camera);
 	GDREGISTER_CLASS(CharacterBody);
+	GDREGISTER_CLASS(VirtualJoystick);
 
 	GDREGISTER_CLASS(PlayerCamera);
 	GDREGISTER_CLASS(PlayerInput);

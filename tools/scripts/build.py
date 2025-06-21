@@ -188,7 +188,7 @@ if using_wsl:
     build_command = "wsl "
 
 game_target = configuration_arg
-if game_target == "editor_game" and platform_arg in ["web", "android"]:
+if game_target in ["editor_game", "development"] and platform_arg in ["web", "android"]:
     game_target = "template_debug"
     
 game_architecture = architecture_arg
